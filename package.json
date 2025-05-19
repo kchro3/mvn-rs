@@ -1,0 +1,9 @@
+{
+  "name": "mvn-rs",
+  "version": "0.1.0",
+  "files": ["mvn/pkg"],
+  "scripts": {
+    "build": "wasm-pack build mvn -t node --release -- --features wasm"
+  },
+  "license": "MIT OR Apache-2.0"
+}
