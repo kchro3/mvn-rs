@@ -58,4 +58,22 @@ mod tests {
         let sample = mvn.sample();
         assert_eq!(sample.len(), 2);
     }
+
+    #[test]
+    fn test_mean_and_cov() {
+        let mean = vec![1.0, -1.0];
+        let cov = vec![2.0, 0.5, 0.5, 1.0];
+        let mvn = MultivariateNormal::new(mean.clone(), cov.clone(), 2);
+        assert_eq!(mvn.mean(), mean);
+        assert_eq!(mvn.covariance(), cov);
+    }
+
+    #[test]
+    #[should_panic(expected = "Covariance not PD")]
+    fn test_non_pd_covariance() {
+        // Covariance matrix with zero determinant is not positive definite
+        let mean = vec![0.0, 0.0];
+        let cov = vec![1.0, -1.0, -1.0, 1.0];
+        MultivariateNormal::new(mean, cov, 2);
+    }
 }
