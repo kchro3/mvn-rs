@@ -28,3 +28,23 @@ let cov = vec![1.0, 0.0, 0.0, 1.0];
 let mvn = MultivariateNormal::new(mean, cov, 2);
 let sample = mvn.sample();
 ```
+
+## JavaScript Interface
+
+After building the WebAssembly package, you can access the distribution from Node.js:
+
+```javascript
+const mvn = require('./mvn/pkg');
+const dist = new mvn.MultivariateNormal([0, 0], [1, 0, 0, 1], 2);
+console.log(dist.sample());
+```
+
+## Benchmarks
+
+Simple performance benchmarks can be run with:
+
+```bash
+npm run benchmark
+```
+
+This compares the WebAssembly implementation with a pure JavaScript fallback located in `js/simple_mvn.js`.
