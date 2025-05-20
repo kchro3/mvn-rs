@@ -19,7 +19,8 @@ impl MultivariateNormal {
     pub fn new(mean: Vec<f64>, cov: Vec<f64>, dim: usize) -> Self {
         let mean = DVector::from_vec(mean);
         let cov = DMatrix::from_row_slice(dim, dim, &cov);
-        let chol = cov.cholesky().expect("Covariance not PD").l();
+        // cholesky consumes self, so operate on a clone to keep `cov` for the struct
+        let chol = cov.clone().cholesky().expect("Covariance not PD").l();
         Self { mean, cov, chol }
     }
 
